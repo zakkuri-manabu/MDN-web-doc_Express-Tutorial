@@ -10,9 +10,12 @@ var catalogRouter = require('./routes/catalog');
 
 var app = express();
 
+app.use(helmet());
+app.use(compression()); //Compress all routes
+
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://127.0.0.1:27017';
+var mongoDB = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017';
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
